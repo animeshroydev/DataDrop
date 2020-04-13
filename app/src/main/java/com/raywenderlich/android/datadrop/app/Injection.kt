@@ -41,6 +41,7 @@ import com.raywenderlich.android.datadrop.ui.map.MapPresenter
 
 object Injection {
 
+  // It's using Files
   private fun provideDropRepository(): DropRepository = SharedPrefsRepository
 
   fun provideMapPresenter(view: MapContract.View): MapContract.Presenter {
