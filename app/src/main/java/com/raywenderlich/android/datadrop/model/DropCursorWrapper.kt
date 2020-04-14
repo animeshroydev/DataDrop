@@ -10,7 +10,8 @@ class DropCursorWrapper(cursor: Cursor): CursorWrapper(cursor) {
         val latitude = getDouble(getColumnIndex(DropDbSchema.DropTable.Columns.LATITUDE))
         val longitude = getDouble(getColumnIndex(DropDbSchema.DropTable.Columns.LONGITUDE))
         val dropMessage = getString(getColumnIndex(DropDbSchema.DropTable.Columns.DROP_MESSAGE))
+        val markerColor = getInt(getColumnIndex(DropDbSchema.DropTable.Columns.MARKER_COLOR))
 
-        return Drop(LatLng(latitude, longitude), dropMessage, id)
+        return Drop(LatLng(latitude, longitude), dropMessage, id, markerColor)
     }
 }

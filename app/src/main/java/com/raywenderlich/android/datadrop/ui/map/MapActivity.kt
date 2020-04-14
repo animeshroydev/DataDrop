@@ -115,21 +115,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, MapContract.View {
   }
 
   override fun showDrop(drop: Drop) {
-    placeMarkerOnMap(drop.latLng, drop.dropMessage)
+    placeMarkerOnMap(drop.latLng, drop.dropMessage, drop.markerColor)
   }
 
   override fun showDrops(drops: List<Drop>) {
     map.clear()
     drops.forEach { drop ->
-      placeMarkerOnMap(drop.latLng, drop.dropMessage)
+      placeMarkerOnMap(drop.latLng, drop.dropMessage, drop.markerColor)
     }
   }
 
-  private fun placeMarkerOnMap(location: LatLng, title: String) {
+  private fun placeMarkerOnMap(location: LatLng, title: String, color: Int = 0) {
     val markerOptions = MarkerOptions().position(location)
     markerOptions.title(title)
 
-    val markerColor = MarkerColor.createMarkerColor(presenter.getMarkerColor())
+    val markerColor = MarkerColor.createMarkerColor(color)
     markerOptions.icon(markerColor.getMarkerBitmapDescriptor())
 
     map.addMarker(markerOptions)
@@ -140,11 +140,37 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, MapContract.View {
     val dialogView = this.layoutInflater.inflate(R.layout.dialog_drop, null)
     dialogBuilder.setView(dialogView)
 
+    val rg = dialogView.findViewById(R.id.radio_group) as RadioGroup
+
+    var color = 0
+
+    for ((index, markerColor) in MarkerColor.values().withIndex()) {
+      val rb = RadioButton(this)
+      rb.text = markerColor.displayString
+      rb.setPadding(36,36,36,36)
+      rg.addView(rb)
+      if (presenter.getMarkerColor() == markerColor.displayString) {
+        rg.check(rb.id)
+        color = index
+      }
+    }
+
+    rg.setOnCheckedChangeListener { group, checkedId ->
+      val childCount = group.childCount
+      for (index in 0 until childCount) {
+        val button = group.getChildAt(index)
+        if (button.id == checkedId) {
+          color = index
+        }
+      }
+
+    }
+
     val messageEditText = dialogView.findViewById(R.id.messageEditText) as EditText
 
     dialogBuilder.setTitle(getString(R.string.make_a_drop))
     dialogBuilder.setPositiveButton(getString(R.string.drop), { _, _ ->
-      addDrop(latLng, messageEditText.text.toString())
+      addDrop(latLng, messageEditText.text.toString(), color)
     })
     dialogBuilder.setNegativeButton(getString(R.string.cancel), { _, _ ->
       //pass
@@ -246,8 +272,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, MapContract.View {
     dialog.show()
   }
 
-  private fun addDrop(latLng: LatLng, message: String) {
-    presenter.addDrop(Drop(latLng, message))
+  private fun addDrop(latLng: LatLng, message: String, markerColor: Int) {
+    presenter.addDrop(Drop(latLng, message, markerColor = markerColor))
   }
 
   private fun clearAllDrops() {

@@ -14,11 +14,17 @@ class DropDbHelper(context: Context)
                 DropTable.Columns.ID + " text, " +
                 DropTable.Columns.LATITUDE + " real, " +
                 DropTable.Columns.LONGITUDE + " real, " +
-                DropTable.Columns.DROP_MESSAGE + " text" + ");"
+                DropTable.Columns.DROP_MESSAGE + " text, " +
+                DropTable.Columns.MARKER_COLOR + " integer" + ");"
         )
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-
+       if (oldVersion < 2) {
+           db.execSQL("alter table " +
+              DropTable.NAME + " add column " +
+              DropTable.Columns.MARKER_COLOR + " integer;"
+           )
+       }
     }
 }

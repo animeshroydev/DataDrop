@@ -51,6 +51,7 @@ class SQLiteRepository : DropRepository {
         contentValues.put(DropDbSchema.DropTable.Columns.LATITUDE, drop.latLng.latitude)
         contentValues.put(DropDbSchema.DropTable.Columns.LONGITUDE, drop.latLng.longitude)
         contentValues.put(DropDbSchema.DropTable.Columns.DROP_MESSAGE, drop.dropMessage)
+        contentValues.put(DropDbSchema.DropTable.Columns.MARKER_COLOR, drop.markerColor)
         return contentValues
     }
 
