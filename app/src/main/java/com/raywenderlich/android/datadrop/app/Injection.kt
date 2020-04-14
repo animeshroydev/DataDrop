@@ -32,6 +32,7 @@
 package com.raywenderlich.android.datadrop.app
 
 import com.raywenderlich.android.datadrop.model.DropRepository
+import com.raywenderlich.android.datadrop.model.FileRepository
 import com.raywenderlich.android.datadrop.model.InMemoryRepository
 import com.raywenderlich.android.datadrop.model.SharedPrefsRepository
 import com.raywenderlich.android.datadrop.ui.droplist.DropListContract
@@ -41,8 +42,14 @@ import com.raywenderlich.android.datadrop.ui.map.MapPresenter
 
 object Injection {
 
-  // It's using Files
-  private fun provideDropRepository(): DropRepository = SharedPrefsRepository
+  // It's using DEFAULT STARTER
+  // private fun provideDropRepository(): DropRepository = InMemoryRepository
+
+  // It's using SharedPrefsRepository
+  // private fun provideDropRepository(): DropRepository = SharedPrefsRepository
+
+  // It is using FileRepository
+  private fun provideDropRepository(): DropRepository = FileRepository
 
   fun provideMapPresenter(view: MapContract.View): MapContract.Presenter {
     return MapPresenter(provideDropRepository(), view)
