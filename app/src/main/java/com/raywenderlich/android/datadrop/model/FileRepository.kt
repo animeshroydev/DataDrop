@@ -33,10 +33,15 @@ object FileRepository : DropRepository {
     override fun getDrops(): List<Drop> {
         val drops = mutableListOf<Drop>()
 
-        val fileList = dropsDirectory().list()
-        fileList.map { convertStreamToString(dropInputStream(it)) }.mapTo(drops) {
-            gson.fromJson(it, Drop::class.java)
+        try {
+            val fileList = dropsDirectory().list()
+            fileList.map { convertStreamToString(dropInputStream(it)) }.mapTo(drops) {
+                gson.fromJson(it, Drop::class.java)
+            }
+        } catch (e: IOException) {
+            Log.e("FileRepository", "Error getting drop")
         }
+
         return drops
     }
 
