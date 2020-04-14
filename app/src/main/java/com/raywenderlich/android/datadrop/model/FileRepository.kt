@@ -54,7 +54,22 @@ object FileRepository : DropRepository {
     }
 
     // begin writing to file
-    private fun dropsDirectory() = getContext().getDir("drops", Context.MODE_PRIVATE)
+
+    // writing to Internal Storage
+     private fun dropsDirectory() = getContext().getDir("drops", Context.MODE_PRIVATE)
+
+
+    // writing to External Storage
+
+
+//    private fun dropsDirectory(): File {
+//        val dropsDirectory = File(getContext().getExternalFilesDir(null), "drops")
+//        if (!dropsDirectory().exists()) {
+//            dropsDirectory.mkdirs()
+//        }
+//        return dropsDirectory
+//    }
+
 
     private fun dropFile(filename: String) = File(dropsDirectory(), filename)
 
