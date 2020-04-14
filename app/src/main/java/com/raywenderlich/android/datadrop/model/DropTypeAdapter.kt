@@ -1,5 +1,6 @@
 package com.raywenderlich.android.datadrop.model
 
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
@@ -9,10 +10,29 @@ import java.io.IOException
 class DropTypeAdapter : TypeAdapter<Drop>() {
 
 
-    override fun read(reader : JsonReader?): Drop? {
-        return null
+    // second reading from file
+    @Throws(IOException::class)
+    override fun read(reader : JsonReader): Drop? {
+        var latitude = 0.0
+        var longitude = 0.0
+        var dropMessage = ""
+        var id = ""
+
+        reader.beginObject()
+        while (reader.hasNext()) {
+            when(reader.nextName()) {
+                "latitude" -> latitude = reader.nextDouble()
+                "longitude" -> longitude = reader.nextDouble()
+                "dropMessage" -> dropMessage = reader.nextString()
+                "id" -> id = reader.nextString()
+            }
+        }
+        reader.endObject()
+
+        return Drop(LatLng(latitude, longitude), dropMessage, id)
     }
 
+    // first writing to file
     @Throws(IOException::class)
     override fun write(out: JsonWriter, drop: Drop) {
         out.beginObject()
