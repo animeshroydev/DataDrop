@@ -22,11 +22,14 @@ class RoomRepository : DropRepository {
     }
 
     override fun clearDrop(drop: Drop) {
-
+        DeleteAsyncTask(dropDao).execute(drop)
     }
 
     override fun clearAllDrops() {
-
+        val dropArray = allDrops.value?.toTypedArray()
+        if (dropArray != null) {
+            DeleteAsyncTask(dropDao).execute(*dropArray)
+        }
     }
 
     // Insert off the main thread
@@ -36,5 +39,12 @@ class RoomRepository : DropRepository {
             return null
         }
 
+    }
+
+    private class DeleteAsyncTask internal constructor(private val dao: DropDao): AsyncTask<Drop, Void, Void>() {
+        override fun doInBackground(vararg params: Drop): Void? {
+            dao.clearDrops(*params)
+            return null
+        }
     }
 }

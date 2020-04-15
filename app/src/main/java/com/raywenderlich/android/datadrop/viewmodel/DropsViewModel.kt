@@ -16,11 +16,11 @@ class DropsViewModel(application: Application) : AndroidViewModel(application) {
        = repository.addDrop(drop)
 
     fun clearAllDrops() {
-
+        repository.clearAllDrops()
     }
 
     fun clearDrop(drop: Drop) {
-
+       repository.clearDrop(drop)
     }
 
 }
