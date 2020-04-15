@@ -4,7 +4,6 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import com.raywenderlich.android.datadrop.app.Injection
 import com.raywenderlich.android.datadrop.model.Drop
-import javax.sql.RowSetListener
 
 class DropsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -13,14 +12,15 @@ class DropsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getDrops() = allDrops
 
-    fun insert(drop: Drop, listener: DropInsertListener)
-       = repository.addDrop(drop, listener)
+    fun insert(drop: Drop)
+       = repository.addDrop(drop)
 
-    fun clearAllDrops(listener: ClearAllDropsListener) {
-        repository.clearAllDrops(listener)
+    fun clearAllDrops() {
+
     }
 
-    fun clearDrop(drop: Drop, listener: ClearDropListener)
-        = repository.clearDrop(drop, listener)
+    fun clearDrop(drop: Drop) {
+
+    }
 
 }

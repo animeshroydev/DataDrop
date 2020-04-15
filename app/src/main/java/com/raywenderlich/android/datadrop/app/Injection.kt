@@ -36,6 +36,6 @@ import com.raywenderlich.android.datadrop.model.*
 object Injection {
 
     // It is using SQLiteRepository
-    fun provideDropRepository(): DropRepository = SQLiteRepository()
+    fun provideDropRepository(): DropRepository = RoomRepository()
 
 }

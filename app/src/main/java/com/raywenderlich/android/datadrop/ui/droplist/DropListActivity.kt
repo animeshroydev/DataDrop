@@ -10,9 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import com.raywenderlich.android.datadrop.R
-import com.raywenderlich.android.datadrop.app.Injection
 import com.raywenderlich.android.datadrop.model.Drop
-import com.raywenderlich.android.datadrop.viewmodel.ClearDropListener
 import com.raywenderlich.android.datadrop.viewmodel.DropsViewModel
 import kotlinx.android.synthetic.main.activity_list.*
 
@@ -38,17 +36,13 @@ class DropListActivity : AppCompatActivity(), DropListAdapter.DropListAdapterLis
 
     dropsViewModel.getDrops().observe(this, Observer<List<Drop>> { drops ->
       adapter.updateDrops(drops ?: emptyList())
+      checkForEmptyState()
     })
 
   }
 
   override fun deleteDropAtPosition(drop: Drop, position: Int) {
-    dropsViewModel.clearDrop(drop, object : ClearDropListener {
-      override fun dropCleared(drop: Drop) {
-        adapter.removeDropAtPosition(position)
-        checkForEmptyState()
-      }
-    })
+
   }
 
   private fun checkForEmptyState() {
