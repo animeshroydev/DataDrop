@@ -19,7 +19,7 @@ object MapPrefs {
     }
     // GET THE MARKER COLOR INTO SHARED PREFS
     // If the marker color not saved the default value gonna be RED
-    fun getMarkerColor(): String = sharedPrefs().getString(KEY_MARKER_COLOR, "Red")
+    fun getMarkerColor(): String = sharedPrefs().getString(KEY_MARKER_COLOR, MarkerColor.RED_COLOR)
 
     // 2nd step is in map ? MapContract add method in interface
 
