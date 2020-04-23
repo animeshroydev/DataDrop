@@ -9,4 +9,4 @@ SQLite Branch: Work directly with Relational Database System that comes with And
 
 RoomWithMVVM Branch: Switched the app using Android Arch Component (Room, ViewModel, LivData) and switched the app from MVP to MVVM
 
-`https://youtu.be/Hrh4UjemPlk`
+https://youtu.be/Hrh4UjemPlk
